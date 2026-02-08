@@ -7,6 +7,7 @@ Built purely for **fun, learning, and good vibes** ✨
 ---
 ## ✨ Demo / What It Does
 
+https://sara-elena-saji.github.io/satisfying-sites/
 
 1. You land on a simple home page
 2. Click a big button → *"Take Me Somewhere Satisfying"*
@@ -54,4 +55,3 @@ Each mini page is small on purpose — the magic is in the interaction, not comp
 
 ---
 
-ng. Smile. Repeat. 😌🫧
