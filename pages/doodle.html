@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle Away! ✏️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #5f27cd;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .canvas-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            border: 3px dashed #ddd;
+            border-radius: 10px;
+            cursor: crosshair;
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-button:hover {
+            transform: scale(1.15);
+        }
+
+        .color-button.active {
+            border-color: #333;
+            transform: scale(1.2);
+        }
+
+        .clear-button, .back-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .clear-button:hover, .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .clear-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        }
+
+        @media (max-width: 600px) {
+            canvas {
+                width: 300px !important;
+                height: 300px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Doodle Away! ✏️</h1>
+        <p class="subtitle">Draw something satisfying</p>
+    </div>
+
+    <div class="controls">
+        <div class="color-picker">
+            <button class="color-button active" data-color="#000000" style="background: #000000;"></button>
+            <button class="color-button" data-color="#ff6b9d" style="background: #ff6b9d;"></button>
+            <button class="color-button" data-color="#4ecdc4" style="background: #4ecdc4;"></button>
+            <button class="color-button" data-color="#ffe66d" style="background: #ffe66d;"></button>
+            <button class="color-button" data-color="#a8dadc" style="background: #a8dadc;"></button>
+            <button class="color-button" data-color="#8b5cf6" style="background: #8b5cf6;"></button>
+        </div>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="doodleCanvas" width="500" height="400"></canvas>
+    </div>
+
+    <div>
+        <button class="clear-button" id="clearButton">Clear Canvas</button>
+        <button class="back-button" onclick="window.location.href='../index.html'">
+            ← Back to Home
+        </button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('doodleCanvas');
+        const ctx = canvas.getContext('2d');
+        const clearButton = document.getElementById('clearButton');
+        const colorButtons = document.querySelectorAll('.color-button');
+
+        let isDrawing = false;
+        let currentColor = '#000000';
+
+        // Set initial canvas properties
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Color selection
+        colorButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                colorButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Set current color
+                currentColor = this.getAttribute('data-color');
+            });
+        });
+
+        // Mouse events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch events for mobile
+        canvas.addEventListener('touchstart', handleTouchStart);
+        canvas.addEventListener('touchmove', handleTouchMove);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            ctx.strokeStyle = currentColor;
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!isDrawing) return;
+            
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            ctx.strokeStyle = currentColor;
+            ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            ctx.stroke();
+        }
+
+        // Clear canvas
+        clearButton.addEventListener('click', function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>

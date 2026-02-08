@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satisfying Sites ✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Pixelated background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating pixel hearts */
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .pixel-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: 
+                linear-gradient(to right, transparent 0%, transparent 25%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, transparent 75%),
+                linear-gradient(to bottom, transparent 0%, transparent 25%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 50%, transparent 50%);
+            background-size: 100% 100%;
+            animation: floatHeart 8s linear infinite;
+            z-index: 0;
+        }
+
+        .pixel-heart:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 10s; }
+        .pixel-heart:nth-child(2) { left: 30%; animation-delay: 2s; animation-duration: 12s; }
+        .pixel-heart:nth-child(3) { left: 50%; animation-delay: 4s; animation-duration: 9s; }
+        .pixel-heart:nth-child(4) { left: 70%; animation-delay: 1s; animation-duration: 11s; }
+        .pixel-heart:nth-child(5) { left: 90%; animation-delay: 3s; animation-duration: 10s; }
+
+        /* Pixel stars */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .pixel-star {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: 
+                linear-gradient(to right, transparent 40%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.3) 60%, transparent 60%),
+                linear-gradient(to bottom, transparent 40%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.3) 60%, transparent 60%);
+            animation: twinkle 3s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .pixel-star:nth-child(6) { top: 15%; left: 15%; animation-delay: 0s; }
+        .pixel-star:nth-child(7) { top: 25%; left: 85%; animation-delay: 1s; }
+        .pixel-star:nth-child(8) { top: 70%; left: 20%; animation-delay: 0.5s; }
+        .pixel-star:nth-child(9) { top: 80%; left: 80%; animation-delay: 1.5s; }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: #ffffff;
+            border: 5px solid #000000;
+            box-shadow: 
+                10px 10px 0px #000000;
+            image-rendering: pixelated;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #000000;
+            margin-bottom: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #333333;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        #mainButton {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            padding: 20px 40px;
+            background: #000000;
+            color: #ffffff;
+            border: 5px solid #000000;
+            cursor: pointer;
+            box-shadow: 
+                8px 8px 0px #666666;
+            transition: all 0.1s ease;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        #mainButton:hover {
+            background: #333333;
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                10px 10px 0px #666666;
+        }
+
+        #mainButton:active {
+            transform: translate(4px, 4px);
+            box-shadow: 
+                4px 4px 0px #666666;
+        }
+
+        .sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border: 4px solid #000000;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            transition: all 0.1s ease;
+            font-weight: bold;
+            box-shadow: 
+                5px 5px 0px #000000;
+            z-index: 100;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .sound-toggle:hover {
+            background: #f0f0f0;
+            transform: translate(-1px, -1px);
+            box-shadow: 
+                6px 6px 0px #000000;
+        }
+
+        .sound-toggle:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                3px 3px 0px #000000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating pixel elements -->
+    <div class="pixel-heart"></div>
+    <div class="pixel-heart"></div>
+    <div class="pixel-heart"></div>
+    <div class="pixel-heart"></div>
+    <div class="pixel-heart"></div>
+    <div class="pixel-star"></div>
+    <div class="pixel-star"></div>
+    <div class="pixel-star"></div>
+    <div class="pixel-star"></div>
+    
+    <button class="sound-toggle" id="soundToggle">🔊 Sound On</button>
+    
+    <div class="container">
+        <h1>Satisfying Sites</h1>
+        <p class="subtitle">Click for a tiny moment of joy</p>
+        <button id="mainButton">Take Me Somewhere Satisfying</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
